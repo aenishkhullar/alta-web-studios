@@ -35,11 +35,9 @@ export const AppRoutes = () => {
             <Route path="blog" element={<Blog />} />
           </Route>
 
-          <Route path="*" element={<NotFound />} />
-
           {/* Admin Dashboard Routes */}
           <Route path="/dashboard/login" element={<Login />} />
-          
+
           <Route element={<ProtectedRoute />}>
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<DashboardOverview />} />
@@ -49,6 +47,9 @@ export const AppRoutes = () => {
               <Route path="/dashboard/deliverables" element={<Deliverables />} />
             </Route>
           </Route>
+
+          {/* Catch-all: must be last — renders custom 404 page */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <ContactModal />
         <ChatModal />
