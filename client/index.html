@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alta Web Studios</title>
+    <!-- Tailwind via CDN for exact replication -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#c8f135",
+                        "primary-fixed": "#aed50d",
+                        "on-background": "#1a1d11",
+                        "primary": "#526600",
+                        "secondary": "#5f5e5e",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c5c9ae",
+                        "surface": "#fafbe7",
+                        "surface-container-high": "#e8ead6",
+                        "on-surface": "#1a1d11",
+                        "secondary-container": "#e5e2e1",
+                        "surface-variant": "#e2e4d1",
+                        "inverse-surface": "#2f3225",
+                        "surface-container": "#eeefdc",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e2e4d1",
+                        "surface-container-low": "#f4f5e2",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#dbe1f1",
+                        "on-error-container": "#93000a",
+                    },
+                    fontFamily: {
+                        "headline": ["Hanken Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                }
+            }
+        }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
