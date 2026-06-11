@@ -1,7 +1,16 @@
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) {
+  console.warn(
+    'Warning: VITE_API_URL environment variable is not defined.\n' +
+    'API calls will fall back to relative path "/api" (using local proxy in development).'
+  );
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
