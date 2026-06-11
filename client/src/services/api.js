@@ -1,16 +1,26 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
+// Centralized API configuration
+export const API_BASE_URL = (() => {
+  let url = import.meta.env.VITE_API_URL || '';
+  if (url.endsWith('/api')) {
+    url = url.slice(0, -4);
+  }
+  if (url.endsWith('/')) {
+    url = url.slice(0, -1);
+  }
+  return url;
+})();
 
-if (!API_URL) {
+if (!API_BASE_URL) {
   console.warn(
     'Warning: VITE_API_URL environment variable is not defined.\n' +
-    'API calls will fall back to relative path "/api" (using local proxy in development).'
+    'API calls will fall back to relative path (using local proxy in development).'
   );
 }
 
 const api = axios.create({
-  baseURL: API_URL || '/api',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

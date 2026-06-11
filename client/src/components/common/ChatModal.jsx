@@ -65,7 +65,7 @@ export const ChatModal = () => {
     setErrorMsg('');
 
     try {
-      const response = await api.post('/ai/chat', { message: messageText.trim() });
+      const response = await api.post('/api/ai/chat', { message: messageText.trim() });
       if (response.data && response.data.success) {
         setMessages(prev => [...prev, {
           id: `assistant-${Date.now()}`,

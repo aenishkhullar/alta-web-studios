@@ -1,4 +1,5 @@
 import React from 'react';
+import dashboardPreviewImg from '../../assets/image-dashboard.jpeg';
 
 export const DashboardPreview = () => {
   return (
@@ -9,7 +10,7 @@ export const DashboardPreview = () => {
                 {/* Left: Dashboard image */}
                 <div style={{position: 'relative'}}>
                     <img
-                        src="/src/assets/image-dashboard.jpeg"
+                        src={dashboardPreviewImg}
                         alt="Dashboard preview"
                         className="w-full lg:w-[80%] mx-auto"
                         style={{

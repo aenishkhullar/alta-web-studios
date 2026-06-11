@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import crmImg from '../../assets/image-crm.jpeg';
 
 export const GlobalSection = () => {
   return (
@@ -27,7 +28,7 @@ export const GlobalSection = () => {
                 {/* Right: CRM image */}
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <img
-                        src="/src/assets/image-crm.jpeg"
+                        src={crmImg}
                         alt="CRM illustration"
                         style={{
                             width: '100%',

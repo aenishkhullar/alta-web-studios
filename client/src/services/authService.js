@@ -2,7 +2,7 @@ import api from './api';
 
 export const authService = {
   login: async (email, password) => {
-    const response = await api.post('/auth/login', { email, password });
+    const response = await api.post('/api/auth/login', { email, password });
     
     // Check if the response was successful and contains data
     if (response.data && response.data.success) {
@@ -15,13 +15,13 @@ export const authService = {
   },
 
   getCurrentAdmin: async () => {
-    const response = await api.get('/auth/me');
+    const response = await api.get('/api/auth/me');
     return response.data;
   },
 
   logout: async () => {
     try {
-      await api.post('/auth/logout');
+      await api.post('/api/auth/logout');
     } catch (error) {
       console.error('Logout error on server:', error);
     } finally {
