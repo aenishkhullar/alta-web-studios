@@ -8,6 +8,7 @@ import projectRoutes from "./routes/projectRoutes.js";
 import deliverableRoutes from "./routes/deliverableRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
+import emailRoutes from "./routes/emailRoutes.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/deliverables", deliverableRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/emails", emailRoutes);
 
 app.get("/", (req, res) => {
     res.json({

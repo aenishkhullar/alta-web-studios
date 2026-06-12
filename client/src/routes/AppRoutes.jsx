@@ -21,6 +21,7 @@ import { LeadsPage } from '../pages/dashboard/LeadsPage';
 import { Clients } from '../pages/dashboard/Clients';
 import { Projects as DashboardProjects } from '../pages/dashboard/Projects';
 import { Deliverables } from '../pages/dashboard/Deliverables';
+import { EmailsPage } from '../pages/dashboard/EmailsPage';
 
 export const AppRoutes = () => {
   return (
@@ -45,6 +46,7 @@ export const AppRoutes = () => {
               <Route path="/dashboard/clients" element={<Clients />} />
               <Route path="/dashboard/projects" element={<DashboardProjects />} />
               <Route path="/dashboard/deliverables" element={<Deliverables />} />
+              <Route path="/dashboard/emails" element={<EmailsPage />} />
             </Route>
           </Route>
 

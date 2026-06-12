@@ -162,7 +162,30 @@ export const LeadDetailsModal = ({ lead, onClose, onStatusUpdated }) => {
               <div>
                 <span style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block' }}>Email Address</span>
                 {lead.email ? (
-                  <a href={`mailto:${lead.email}`} style={{ fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', wordBreak: 'break-all' }}>{lead.email}</a>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                    <a href={`mailto:${lead.email}`} style={{ fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', wordBreak: 'break-all' }}>{lead.email}</a>
+                    <button
+                      onClick={() => {
+                        onClose();
+                        navigate(`/dashboard/emails?to=${encodeURIComponent(lead.email)}&name=${encodeURIComponent(lead.name)}`);
+                      }}
+                      style={{
+                        padding: '2px 8px',
+                        fontSize: '11px',
+                        backgroundColor: 'var(--primary-glow)',
+                        color: 'var(--primary)',
+                        border: '1px solid var(--border-focus)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontWeight: '600',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
+                      <Mail size={10} /> Send Email
+                    </button>
+                  </div>
                 ) : (
                   <span style={{ fontSize: '14px', fontWeight: '500', color: 'var(--text-muted)' }}>N/A</span>
                 )}
@@ -328,7 +351,7 @@ export const LeadDetailsModal = ({ lead, onClose, onStatusUpdated }) => {
             <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <UserCheck size={16} /> CRM Actions
             </span>
-            <div>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <button
                 disabled={isConverting}
                 onClick={handleConvert}
@@ -363,6 +386,40 @@ export const LeadDetailsModal = ({ lead, onClose, onStatusUpdated }) => {
                 <UserCheck size={16} />
                 {lead.status === 'Won' ? 'Lead Converted to Client (Won)' : isConverting ? 'Converting...' : 'Convert To Client'}
               </button>
+
+              {lead.email && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    navigate(`/dashboard/emails?to=${encodeURIComponent(lead.email)}&name=${encodeURIComponent(lead.name)}`);
+                  }}
+                  style={{
+                    padding: '12px 24px',
+                    borderRadius: 'var(--border-radius-md)',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    backgroundColor: 'var(--bg-tertiary)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    transition: 'all var(--transition-fast)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.backgroundColor = 'var(--bg-glass)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <Mail size={16} />
+                  Send Email
+                </button>
+              )}
             </div>
           </div>
         </div>

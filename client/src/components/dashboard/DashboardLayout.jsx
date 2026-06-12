@@ -9,7 +9,8 @@ import {
   LogOut, 
   Menu, 
   X,
-  Shield
+  Shield,
+  Mail
 } from 'lucide-react';
 import authService from '../../services/authService';
 
@@ -50,6 +51,7 @@ export const DashboardLayout = () => {
   const navItems = [
     { label: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={20} />, isPlaceholder: false },
     { label: 'Leads', path: '/dashboard/leads', icon: <Inbox size={20} />, isPlaceholder: false },
+    { label: 'Emails', path: '/dashboard/emails', icon: <Mail size={20} />, isPlaceholder: false },
     { label: 'Clients', path: '/dashboard/clients', icon: <Users size={20} />, isPlaceholder: false },
     { label: 'Projects', path: '/dashboard/projects', icon: <FolderGit size={20} />, isPlaceholder: false },
     { label: 'Deliverables', path: '/dashboard/deliverables', icon: <CheckSquare size={20} />, isPlaceholder: false },
