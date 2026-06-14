@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import generateClientId from "../utils/generateClientId.js";
 
 const clientSchema = new mongoose.Schema(
     {
@@ -54,11 +55,32 @@ const clientSchema = new mongoose.Schema(
             ref: "Lead",
             default: null,
         },
+        clientId: {
+            type: String,
+            unique: true,
+            sparse: true,
+        },
     },
     {
         timestamps: true,
     }
 );
+
+// Pre-save hook to generate unique Client ID if not present
+clientSchema.pre("save", async function() {
+    if (!this.clientId) {
+        let isUnique = false;
+        let generatedId = "";
+        while (!isUnique) {
+            generatedId = generateClientId();
+            const existingClient = await this.constructor.findOne({ clientId: generatedId });
+            if (!existingClient) {
+                isUnique = true;
+            }
+        }
+        this.clientId = generatedId;
+    }
+});
 
 const Client = mongoose.model("Client", clientSchema);
 

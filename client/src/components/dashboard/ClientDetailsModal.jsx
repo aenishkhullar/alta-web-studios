@@ -1,5 +1,6 @@
 import React from 'react';
-import { X, Mail, Phone, Briefcase, Globe, Calendar, FileText, Info, Award } from 'lucide-react';
+import { X, Mail, Phone, Briefcase, Globe, Calendar, FileText, Info, Award, Copy, Hash } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export const ClientDetailsModal = ({ client, onClose }) => {
   if (!client) return null;
@@ -80,6 +81,35 @@ export const ClientDetailsModal = ({ client, onClose }) => {
             <h3 style={{ fontSize: '22px', fontWeight: '700', fontFamily: 'var(--font-heading)', margin: 0 }}>
               {client.name}
             </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '6px' }}>
+              <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                Client ID: <strong style={{ color: 'var(--text-primary)', fontFamily: 'monospace' }}>{client.clientId || 'N/A'}</strong>
+              </span>
+              {client.clientId && (
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(client.clientId);
+                    toast.success('Client ID copied!');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--text-muted)',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '2px',
+                    borderRadius: '4px',
+                    transition: 'color 0.2s'
+                  }}
+                  title="Copy Client ID"
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--primary)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                >
+                  <Copy size={13} />
+                </button>
+              )}
+            </div>
           </div>
           <button
             onClick={onClose}
@@ -107,6 +137,40 @@ export const ClientDetailsModal = ({ client, onClose }) => {
         <div style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Metadata Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Hash size={18} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+              <div>
+                <span style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block' }}>Client ID</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: 'monospace' }}>{client.clientId || 'N/A'}</span>
+                  {client.clientId && (
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(client.clientId);
+                        toast.success('Client ID copied!');
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'var(--text-muted)',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        padding: '2px',
+                        borderRadius: '4px',
+                        transition: 'color 0.2s'
+                      }}
+                      title="Copy Client ID"
+                      onMouseEnter={e => e.currentTarget.style.color = 'var(--primary)'}
+                      onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                    >
+                      <Copy size={13} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <Mail size={18} style={{ color: 'var(--primary)', flexShrink: 0 }} />
               <div>

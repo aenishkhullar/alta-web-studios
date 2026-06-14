@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Eye, Edit, Trash2, RefreshCw, AlertTriangle, Users } from 'lucide-react';
+import { Search, Filter, Eye, Edit, Trash2, RefreshCw, AlertTriangle, Users, Copy } from 'lucide-react';
 import clientService from '../../services/clientService';
 import ClientDetailsModal from '../../components/dashboard/ClientDetailsModal';
 import EditClientModal from '../../components/dashboard/EditClientModal';
@@ -52,7 +52,8 @@ export const Clients = () => {
       result = result.filter(client => 
         client.name.toLowerCase().includes(term) ||
         client.email.toLowerCase().includes(term) ||
-        (client.company && client.company.toLowerCase().includes(term))
+        (client.company && client.company.toLowerCase().includes(term)) ||
+        (client.clientId && client.clientId.toLowerCase().includes(term))
       );
     }
 
@@ -257,6 +258,7 @@ export const Clients = () => {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-color)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                  <th style={{ padding: '16px 24px', fontWeight: '600', color: 'var(--text-secondary)' }}>Client ID</th>
                   <th style={{ padding: '16px 24px', fontWeight: '600', color: 'var(--text-secondary)' }}>Name</th>
                   <th style={{ padding: '16px 24px', fontWeight: '600', color: 'var(--text-secondary)' }}>Company</th>
                   <th style={{ padding: '16px 24px', fontWeight: '600', color: 'var(--text-secondary)' }}>Email</th>
@@ -273,6 +275,36 @@ export const Clients = () => {
                     onMouseEnter={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.01)'}
                     onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
+                    <td style={{ padding: '16px 24px', fontFamily: 'monospace', fontSize: '13px', color: 'var(--text-primary)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span>{client.clientId || '-'}</span>
+                        {client.clientId && (
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(client.clientId);
+                              toast.success('Client ID copied!');
+                            }}
+                            style={{
+                              background: 'none',
+                              border: 'none',
+                              color: 'var(--text-muted)',
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              padding: '2px',
+                              borderRadius: '4px',
+                              opacity: 0.6,
+                              transition: 'all 0.2s'
+                            }}
+                            title="Copy Client ID"
+                            onMouseEnter={e => { e.currentTarget.style.color = 'var(--primary)'; e.currentTarget.style.opacity = 1; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.opacity = 0.6; }}
+                          >
+                            <Copy size={12} />
+                          </button>
+                        )}
+                      </div>
+                    </td>
                     <td style={{ padding: '16px 24px', fontWeight: '600', color: 'var(--text-primary)' }}>{client.name}</td>
                     <td style={{ padding: '16px 24px', color: 'var(--text-primary)' }}>{client.company || '-'}</td>
                     <td style={{ padding: '16px 24px', color: 'var(--text-secondary)' }}>{client.email || '-'}</td>
