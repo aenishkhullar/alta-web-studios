@@ -8,10 +8,10 @@ import { sendError } from "../utils/apiResponse.js";
 export const protect = async (req, res, next) => {
     let token;
 
-    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    if (req.headers.authorization && req.headers.authorization.toLowerCase().startsWith("bearer")) {
         try {
-            // Get token from header
-            token = req.headers.authorization.split(" ")[1];
+            // Get token from header (removes Bearer prefix case-insensitively)
+            token = req.headers.authorization.replace(/^Bearer\s+/i, "");
 
             // Verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
