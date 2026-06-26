@@ -15,6 +15,8 @@ export const protect = async (req, res, next) => {
         try {
             // Get token from header (removes Bearer prefix case-insensitively)
             token = req.headers.authorization.replace(/^Bearer\s+/i, "");
+            // Clean any potential quotes (defensive programming)
+            token = token.replace(/['"]+/g, '');
             console.log("[AUTH AUDIT] Extracted token:", token ? `${token.substring(0, 15)}... [length: ${token.length}]` : "empty");
 
             // Verify token

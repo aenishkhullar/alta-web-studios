@@ -29,12 +29,23 @@ const api = axios.create({
 // Add a request interceptor to automatically add authorization token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    console.log('[AXIOS REQUEST AUDIT] Path:', config.url, 'Token from localStorage:', token ? `${token.substring(0, 15)}... [length: ${token.length}]` : 'not found');
+    let token = localStorage.getItem('token');
     if (token) {
-      config.headers = config.headers || {};
-      config.headers['Authorization'] = `Bearer ${token}`;
-      console.log('[AXIOS REQUEST AUDIT] Attached Authorization header:', config.headers['Authorization']);
+      // Clean any wrapping quotes from token (defensive programming)
+      if (token.startsWith('"') && token.endsWith('"')) {
+        token = token.slice(1, -1);
+      }
+      console.log('[AXIOS REQUEST AUDIT] Path:', config.url, 'Token from localStorage:', token ? `${token.substring(0, 15)}... [length: ${token.length}]` : 'not found');
+      if (config.headers && typeof config.headers.set === 'function') {
+        config.headers.set('Authorization', `Bearer ${token}`);
+      } else {
+        config.headers = config.headers || {};
+        config.headers['Authorization'] = `Bearer ${token}`;
+      }
+      const authHeader = (config.headers && typeof config.headers.get === 'function') 
+        ? config.headers.get('Authorization') 
+        : config.headers?.Authorization;
+      console.log('[AXIOS REQUEST AUDIT] Attached Authorization header:', authHeader);
     } else {
       console.log('[AXIOS REQUEST AUDIT] No token found in localStorage, Authorization header not attached.');
     }
