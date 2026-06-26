@@ -35,23 +35,35 @@ api.interceptors.request.use(
       if (token.startsWith('"') && token.endsWith('"')) {
         token = token.slice(1, -1);
       }
-      console.log('[AXIOS REQUEST AUDIT] Path:', config.url, 'Token from localStorage:', token ? `${token.substring(0, 15)}... [length: ${token.length}]` : 'not found');
       if (config.headers && typeof config.headers.set === 'function') {
         config.headers.set('Authorization', `Bearer ${token}`);
       } else {
         config.headers = config.headers || {};
         config.headers['Authorization'] = `Bearer ${token}`;
       }
-      const authHeader = (config.headers && typeof config.headers.get === 'function') 
-        ? config.headers.get('Authorization') 
-        : config.headers?.Authorization;
-      console.log('[AXIOS REQUEST AUDIT] Attached Authorization header:', authHeader);
-    } else {
-      console.log('[AXIOS REQUEST AUDIT] No token found in localStorage, Authorization header not attached.');
     }
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor to handle token expiration or unauthorized errors
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('admin');
+      
+      // Redirect to login page if we are not already there
+      if (!window.location.pathname.endsWith('/login')) {
+        window.location.href = '/login';
+      }
+    }
     return Promise.reject(error);
   }
 );
