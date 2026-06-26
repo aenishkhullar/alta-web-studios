@@ -30,9 +30,13 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
+    console.log('[AXIOS REQUEST AUDIT] Path:', config.url, 'Token from localStorage:', token ? `${token.substring(0, 15)}... [length: ${token.length}]` : 'not found');
     if (token) {
       config.headers = config.headers || {};
       config.headers['Authorization'] = `Bearer ${token}`;
+      console.log('[AXIOS REQUEST AUDIT] Attached Authorization header:', config.headers['Authorization']);
+    } else {
+      console.log('[AXIOS REQUEST AUDIT] No token found in localStorage, Authorization header not attached.');
     }
     return config;
   },
