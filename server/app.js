@@ -11,6 +11,7 @@ import aiRoutes from "./routes/aiRoutes.js";
 import emailRoutes from "./routes/emailRoutes.js";
 
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(cors());
 app.use(helmet());
